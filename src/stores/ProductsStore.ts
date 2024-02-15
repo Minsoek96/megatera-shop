@@ -1,22 +1,19 @@
-import axios from 'axios';
-
 import { singleton } from 'tsyringe';
 
 import { Action, Store } from 'usestore-ts';
 
 import { ProductSummary } from '../types';
+import { apiService } from '../services/ApiService';
 
-const apiBaseUrl = 'https://shop-demo-api-01.fly.dev';
 @singleton()
 @Store()
 export default class ProductsStore {
   products: ProductSummary[] = [];
 
-  async fetchProducts() {
+  async fetchProducts({ categoryId }:{categoryId? : string}) {
     this.setProducts([]);
 
-    const { data } = await axios.get(`${apiBaseUrl}/products`);
-    const { products } = data;
+    const products = await apiService.fetchProducts({ categoryId });
 
     this.setProducts(products);
   }
