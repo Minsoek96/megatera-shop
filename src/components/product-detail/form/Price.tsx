@@ -1,21 +1,17 @@
 import styled from 'styled-components';
 
-import useProductDetailStore from '../../../hooks/useProductDetailStore';
-import useProductFormStore from '../../../hooks/useProductFormstore';
-
 import numberFormat from '../../../utils/numberFormat';
+import useProductFormStore from '../../../hooks/useProductFormstore';
 
 const Container = styled.div`
     margin-block: .2rem;
 `;
 
 export default function Price() {
-  const [{ product }] = useProductDetailStore();
-  const [{ quantity }] = useProductFormStore();
-
+  const [, productFormStore] = useProductFormStore();
   return (
     <Container>
-      {numberFormat(product.price * quantity)}
+      {numberFormat(productFormStore.price)}
       원
     </Container>
   );
