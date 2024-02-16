@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
 import useProductDetailStore from '../../hooks/useProductDetailStore';
+
 import Images from './Image';
 import Description from './Description';
-
-function AddToCartForm() {
-  return null;
-}
+import AddToCartForm from './form/AddToCartForm';
 
 const Container = styled.div`
   display: flex;
