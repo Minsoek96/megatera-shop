@@ -4,9 +4,7 @@ import { Action, Store } from 'usestore-ts';
 
 import { apiService } from '../services/ApiService';
 
-import {
-  ProductDetail, ProductOptionItem, nullProductDetail,
-} from '../types';
+import { ProductDetail, ProductOptionItem, nullProductDetail } from '../types';
 
 @singleton()
 @Store()
@@ -62,6 +60,19 @@ export default class ProductFormStore {
       return;
     }
     this.quantity = quantity;
+  }
+
+  @Action()
+  changeOptionItem({ optionId, optionItemId }: {
+    optionId: string;
+    optionItemId: string;
+  }) {
+    this.selectedOptionItems = this.product.options.map((option, index) => {
+      const item = this.selectedOptionItems[index];
+      return option.id !== optionId
+        ? item
+        : option.items.find((i) => i.id === optionItemId) ?? item;
+    });
   }
 
   get price() {
