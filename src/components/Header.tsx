@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -6,6 +6,8 @@ import Button from './ui/Buttton';
 
 import useFetchCategories from '../hooks/useCategories';
 import useAccessToken from '../hooks/useAccessToken';
+
+import { apiService } from '../services/ApiService';
 
 const Container = styled.header`
   margin-bottom: 2rem;
@@ -32,14 +34,16 @@ const Container = styled.header`
 `;
 
 export default function Header() {
-  const { accessToken } = useAccessToken();
+  const navigate = useNavigate();
+
+  const { accessToken, setAccessToken } = useAccessToken();
 
   const { categories } = useFetchCategories();
 
   const handleClickLogout = async () => {
-    // TODO: 로그아웃
-    // setAccessToekn('');
-    // navigate('/');
+    await apiService.logout();
+    setAccessToken('');
+    navigate('/');
   };
 
   return (
