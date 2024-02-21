@@ -75,6 +75,12 @@ export default class ApiService {
     const { accessToken } = data;
     return accessToken;
   }
+
+  async fetchCurrentUser():Promise<{id:string, name:string}> {
+    const { data } = await this.instance.get('/users/me');
+    const { id, name } = data;
+    return { id, name };
+  }
 }
 
 export const apiService = new ApiService();
