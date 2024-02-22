@@ -5,7 +5,7 @@ import { ProductSummary } from '../types';
 
 import fixtures from '../../fixtures';
 
-const BASE_URL = 'https://shop-demo-api-01.fly.dev';
+const BASE_URL = 'https://shop-demo-api-02.fly.dev';
 
 const productSummaries: ProductSummary[] = fixtures.products
   .map((product) => ({

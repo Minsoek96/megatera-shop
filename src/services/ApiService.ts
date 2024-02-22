@@ -13,7 +13,7 @@ export default class ApiService {
 
   private accessToken = '';
 
-  setAccessToken(accessToken:string) {
+  setAccessToken(accessToken: string) {
     if (accessToken === this.accessToken) {
       return;
     }
@@ -43,8 +43,11 @@ export default class ApiService {
     return products;
   }
 
-  async fetchProduct({ productId } : {
-    productId: string}): Promise<ProductDetail> {
+  async fetchProduct({
+    productId,
+  }: {
+    productId: string;
+  }): Promise<ProductDetail> {
     const { data } = await this.instance.get(`/products/${productId}`);
     return data;
   }
@@ -54,7 +57,11 @@ export default class ApiService {
     return data;
   }
 
-  async addProductToCart({ productId, options, quantity }: {
+  async addProductToCart({
+    productId,
+    options,
+    quantity,
+  }: {
     productId: string;
     options: {
       id: string;
@@ -63,11 +70,16 @@ export default class ApiService {
     quantity: number;
   }): Promise<void> {
     await this.instance.post('/cart/line-items', {
-      productId, options, quantity,
+      productId,
+      options,
+      quantity,
     });
   }
 
-  async login({ email, password }: {
+  async login({
+    email,
+    password,
+  }: {
     email: string;
     password: string;
   }): Promise<string> {
@@ -76,7 +88,7 @@ export default class ApiService {
     return accessToken;
   }
 
-  async fetchCurrentUser():Promise<{id:string, name:string}> {
+  async fetchCurrentUser(): Promise<{ id: string; name: string }> {
     const { data } = await this.instance.get('/users/me');
     const { id, name } = data;
     return { id, name };
@@ -84,6 +96,23 @@ export default class ApiService {
 
   async logout(): Promise<void> {
     await this.instance.delete('/session');
+  }
+
+  async signup({
+    email,
+    name,
+    password,
+  }: {
+    email: string;
+    name: string;
+    password: string;
+  }): Promise<string> {
+    const { data } = await this.instance.post('/users', {
+      email, name, password,
+    });
+
+    const { accessToken } = data;
+    return accessToken;
   }
 }
 
