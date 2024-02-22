@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {
-  Cart, Category, ProductDetail, ProductSummary,
+  Cart, Category, OrderSummary, ProductDetail, ProductSummary,
 } from '../types';
 
 const API_BASE_URL = process.env.API_BASE_URL || 'https://shop-demo-api-02.fly.dev';
@@ -113,6 +113,12 @@ export default class ApiService {
 
     const { accessToken } = data;
     return accessToken;
+  }
+
+  async fetchOrders(): Promise<OrderSummary[]> {
+    const { data } = await this.instance.get('/orders');
+    const { orders } = data;
+    return orders;
   }
 }
 
