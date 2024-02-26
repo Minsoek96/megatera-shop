@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
+import { useBoolean } from 'usehooks-ts';
 import TextBox from '../ui/TextBox';
 import Button from '../ui/Buttton';
 
 import useOrderFormStore from '../../hooks/useOrderFormStore';
+import AddressSearch from './AddressSearch';
 
 const Container = styled.div`
   h3 {
@@ -31,8 +33,13 @@ export default function ShippingForm() {
     name, address1, address2, postalCode, phoneNumber,
   }, store] = useOrderFormStore();
 
+  const {
+    value: searching, setTrue: openSearch, setFalse: closeSearch,
+  } = useBoolean();
+
   const handleClickSearchPostalCode = () => {
     // TODO: 우편번호 검색
+    openSearch();
   };
 
   const handleChangeName = (value: string) => {
@@ -89,6 +96,9 @@ export default function ShippingForm() {
         value={phoneNumber}
         onChange={handlePhoneNumber}
       />
+      {
+        searching && <AddressSearch changeAddress={handleChangeAddress1} close={closeSearch} />
+      }
     </Container>
   );
 }
