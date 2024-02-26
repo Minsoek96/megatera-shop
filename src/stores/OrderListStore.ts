@@ -1,10 +1,13 @@
 import { singleton } from 'tsyringe';
+
 import { Action, Store } from 'usestore-ts';
+
 import { OrderSummary } from '../types';
+
 import { apiService } from '../services/ApiService';
 
-singleton();
-Store();
+@singleton()
+@Store()
 export default class OrderListStore {
   orders: OrderSummary[] = [];
 
@@ -16,8 +19,8 @@ export default class OrderListStore {
     this.setOrders(orders);
   }
 
-    @Action()
-  setOrders(orders:OrderSummary[]) {
+  @Action()
+  setOrders(orders: OrderSummary[]) {
     this.orders = orders;
   }
 }

@@ -1,64 +1,34 @@
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-import numberFormat from '../../utils/numberFormat';
-
-import LineItemView from './LineItemView';
+import Button from '../ui/Buttton';
+import Table from '../ui/Table';
 
 import { Cart } from '../../types';
-
-const Container = styled.div`
-  table {
-    width: 100%;
-  }
-
-  th, td {
-    padding: .5rem;
-    text-align: left;
-  }
-`;
 
 type CartViewProps = {
   cart: Cart;
 };
 
 export default function CartView({ cart }: CartViewProps) {
+  const navigate = useNavigate();
+
   if (!cart.lineItems.length) {
-    return (
-      <p>장바구니가 비었습니다</p>
-    );
+    return <p>장바구니가 비었습니다</p>;
   }
 
+  const handleClick = () => {
+    navigate('/order');
+  };
+
   return (
-    <Container>
-      <table>
-        <thead>
-          <tr>
-            <th>제품</th>
-            <th>단가</th>
-            <th>수량</th>
-            <th>금액</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.lineItems.map((lineItem) => (
-            <LineItemView
-              key={lineItem.id}
-              lineItem={lineItem}
-            />
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colSpan={3}>
-              합계
-            </th>
-            <td>
-              {numberFormat(cart.totalPrice)}
-              원
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </Container>
+    <div>
+      <Table
+        lineItems={cart.lineItems}
+        totalPrice={cart.totalPrice}
+      />
+      <Button onClick={handleClick}>
+        주문하기
+      </Button>
+    </div>
   );
 }

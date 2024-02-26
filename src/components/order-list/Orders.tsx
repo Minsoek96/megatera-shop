@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Order from './Order';
 
-import { OrderSummary } from '../../types';
+import { OrderDetail } from '../../types';
 
 const Container = styled.div`
   li {
@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 type OrdersProps = {
-  orders: OrderSummary[];
+  orders: OrderDetail[];
 };
 
 export default function Orders({ orders }: OrdersProps) {
