@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 
 function main() {
+  Reflect.get(window, 'IMP').init(process.env.PORTONE_IMP);
+
   const container = document.getElementById('root');
   if (!container) {
     return;

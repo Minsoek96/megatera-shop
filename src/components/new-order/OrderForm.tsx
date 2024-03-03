@@ -3,6 +3,7 @@ import { Cart } from '../../types';
 
 import Table from '../ui/Table';
 import ShippingForm from './ShippingForm';
+import PaymentButton from './PaymentButton';
 
 const Container = styled.div`
     h2{
@@ -22,6 +23,7 @@ export default function OrderForm({ cart }: OrderFormProps) {
         totalPrice={cart.totalPrice}
       />
       <ShippingForm />
+      <PaymentButton cart={cart} />
     </Container>
   );
 }
