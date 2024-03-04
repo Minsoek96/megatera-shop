@@ -1,6 +1,7 @@
 import { singleton } from 'tsyringe';
 
 import { Action, Store } from 'usestore-ts';
+import { apiService } from '../services/ApiService';
 
 @singleton()
 @Store()
@@ -42,5 +43,21 @@ export default class OrderFormStore {
   @Action()
   changePhoneNumber(phoneNumber: string) {
     this.phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+  }
+
+  async order({ merchantId, transactionId }: {
+    merchantId: string;
+    transactionId: string;
+  }) {
+    await apiService.createOrder({
+      receiver: {
+        name: this.name,
+        address1: this.address1,
+        address2: this.address2,
+        postalCode: this.postalCode,
+        phoneNumber: this.phoneNumber,
+      },
+      payment: { merchantId, transactionId },
+    });
   }
 }

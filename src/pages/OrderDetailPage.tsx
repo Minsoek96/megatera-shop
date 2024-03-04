@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import Order from '../components/order-list/Order';
+import Order from '../components/order-detail/Order';
 
 import useFetchOrder from '../hooks/useFetchOrder';
 

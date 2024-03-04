@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { OrderDetail } from '../../types';
-
-import Table from '../ui/Table';
+import { OrderSummary } from '../../types';
+import numberFormat from '../../utils/numberFormat';
 
 const Container = styled.div`
   dl {
@@ -21,26 +20,33 @@ const Container = styled.div`
 `;
 
 type OrderProps = {
-  order: OrderDetail;
+  order: OrderSummary;
 }
 
 export default function Order({ order }: OrderProps) {
-  if (!order.lineItems.length) {
-    return null;
-  }
-
   return (
     <Container>
-      <dl>
-        <dt>주문 일시</dt>
-        <dd>{order.orderedAt}</dd>
-        <dt>주문 코드</dt>
-        <dd>{order.id}</dd>
-      </dl>
-      <Table
-        lineItems={order.lineItems}
-        totalPrice={order.totalPrice}
-      />
+      <div>
+        주문 일시:
+        {' '}
+        {order.orderedAt}
+      </div>
+      <div>
+        주문 코드:
+        {' '}
+        {order.id}
+      </div>
+      <div>
+        상품:
+        {' '}
+        {order.title}
+      </div>
+      <div>
+        결제 금액:
+        {' '}
+        {numberFormat(order.totalPrice)}
+        원
+      </div>
     </Container>
   );
 }

@@ -4,7 +4,7 @@ import {
   Cart, Category, OrderDetail, OrderSummary, ProductDetail, ProductSummary,
 } from '../types';
 
-const API_BASE_URL = process.env.API_BASE_URL || 'https://shop-demo-api-02.fly.dev';
+const API_BASE_URL = process.env.API_BASE_URL || 'https://shop-demo-api-04.fly.dev';
 
 export default class ApiService {
   private instance = axios.create({
@@ -126,6 +126,22 @@ export default class ApiService {
   }):Promise<OrderDetail> {
     const { data } = await this.instance.get(`/orders/${orderId}`);
     return data;
+  }
+
+  async createOrder({ receiver, payment }: {
+    receiver: {
+      name: string;
+      address1: string;
+      address2: string;
+      postalCode: string;
+      phoneNumber: string;
+    };
+    payment: {
+      merchantId: string;
+      transactionId: string;
+    };
+  }): Promise<void> {
+    await this.instance.post('/orders', { receiver, payment });
   }
 }
 
